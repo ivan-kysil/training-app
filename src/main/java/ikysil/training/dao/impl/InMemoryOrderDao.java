@@ -4,39 +4,40 @@ import ikysil.training.dao.OrderDao;
 import ikysil.training.ws.api.v1.dto.OrderDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-// TODO implement, use storage
 @Component
 public class InMemoryOrderDao implements OrderDao {
 
-    private Map<String, OrderDao> storage = new HashMap<>();
+    private Map<String, OrderDto> storage = new HashMap<>();
 
     @Override
     public OrderDto saveOrder(OrderDto order) {
-        return null;
+        storage.put(order.getId(), order);
+        return order;
     }
 
     @Override
     public OrderDto findOrder(String id) {
-        return null;
+        return storage.get(id);
     }
 
     @Override
     public List<OrderDto> findAll() {
-        return null;
+        return new ArrayList<>(storage.values());
     }
 
     @Override
     public OrderDto updateOrder(String id, OrderDto order) {
-        return null;
+        storage.computeIfPresent(id, (k, v) -> v = order);
+        return order;
     }
 
     @Override
     public void deleteOrder(String id) {
-
+        storage.remove(id);
     }
 }

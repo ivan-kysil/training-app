@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-// TODO implement, use dao to CRUD orders
 @Component
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -17,26 +16,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto createOrder(OrderDto order) {
-        return null;
+        return dao.saveOrder(order);
     }
 
     @Override
     public OrderDto getOrder(String orderId) {
-        return null;
+        return dao.findOrder(orderId);
     }
 
     @Override
     public List<OrderDto> getOrders() {
-        return null;
+        return dao.findAll();
     }
 
     @Override
     public OrderDto updateOrder(String orderId, OrderDto order) {
-        return null;
+        return dao.updateOrder(orderId, order);
     }
 
     @Override
     public void deleteOrder(String orderId) {
-
+        dao.deleteOrder(orderId);
     }
 }
