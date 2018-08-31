@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+management:
+  port: 8081
+
+endpoints:
+  health:
+    enabled: true
+  jmx:
+    enabled: true
+  metrics:
+    enabled: false
+
