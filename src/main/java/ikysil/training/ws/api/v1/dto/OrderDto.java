@@ -23,6 +23,8 @@ public class OrderDto {
     private Instant updatedOn;
     private Instant completedOn;
 
+    public OrderDto() { }
+
     public OrderDto(String id, String orderNumber, String sourceSystem, String userId, String userEmail) {
         this.id = id;
         this.orderNumber = orderNumber;

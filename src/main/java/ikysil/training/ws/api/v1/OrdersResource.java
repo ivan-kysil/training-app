@@ -21,6 +21,8 @@ import java.util.Map;
 
 // TODO add mapper
 // TODO add search API
+// TODO add model validation
+// TODO add fail path tests
 
 @Component
 @Path("/api/v1/orders/")
