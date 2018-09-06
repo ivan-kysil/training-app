@@ -12,11 +12,13 @@ public abstract class AbstractMapper<E extends Throwable> implements javax.ws.rs
 
     public final Response toResponse(E exception) {
         logException(LOGGER, exception);
-        return Response.serverError().entity(new ErrorDto()
-                .setCode(getStatus().getStatusCode())
-                .setStatus(getStatus().getReasonPhrase())
-                .setMessage(getMessage(exception))
-        ).type("application/json").build();
+        return Response
+                .status(getStatus())
+                .entity(new ErrorDto()
+                        .setCode(getStatus().getStatusCode())
+                        .setStatus(getStatus().getReasonPhrase())
+                        .setMessage(getMessage(exception))
+                ).type("application/json").build();
     }
 
     protected Response.Status getStatus() {

@@ -11,5 +11,6 @@ public interface OrderDao {
     OrderDto findOrder(String id);
     List<OrderDto> findAll();
     OrderDto updateOrder(String id, OrderDto order);
-    void deleteOrder(String id);
+    OrderDto deleteOrder(String id);
+    void deleteAll();
 }
