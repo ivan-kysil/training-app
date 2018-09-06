@@ -37,7 +37,12 @@ public class InMemoryOrderDao implements OrderDao {
     }
 
     @Override
-    public void deleteOrder(String id) {
-        storage.remove(id);
+    public OrderDto deleteOrder(String id) {
+        return storage.remove(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        storage.clear();
     }
 }

@@ -69,9 +69,9 @@ public class OrdersResource {
             @Pattern(regexp = "^[a-zA-Z]{3}[0-9]{5}$", message = "Invalid order id format. Expected format is 'ABC12345'")
                     String orderId) {
 
-        orderService.deleteOrder(orderId);
+        OrderDto order = orderService.deleteOrder(orderId);
 
-        return Response.ok().build();
+        return Response.ok(order).build();
     }
 
     @PUT
