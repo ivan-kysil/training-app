@@ -2,6 +2,8 @@ package ikysil.training.ws.api.v1.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.time.Instant;
 
@@ -10,10 +12,15 @@ import java.time.Instant;
 public class OrderDto {
 
     private String id;
+
+    @NotEmpty(message = "orderNumber must not be null")
     private String orderNumber;
     private String sourceSystem;
 
+    @NotEmpty(message = "userId must not be null")
     private String userId;
+    @NotEmpty(message = "userEmail must not be null")
+    @Email(message = "userEmail must be valid email format")
     private String userEmail;
 
     private DeliveryDto deliveryInfo;

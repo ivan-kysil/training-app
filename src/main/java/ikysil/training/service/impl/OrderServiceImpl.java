@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    OrderDao dao;
+    private final OrderDao dao;
 
     @Override
     public OrderDto createOrder(OrderDto order) {

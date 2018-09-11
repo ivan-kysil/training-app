@@ -5,6 +5,8 @@ import ikysil.training.ws.api.v1.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -33,7 +35,7 @@ public class OrdersResource {
     private final OrderService orderService;
 
     @POST
-    public Response createOrders(OrderDto order) {
+    public Response createOrders(@Valid OrderDto order) {
         OrderDto createdOrder = orderService.createOrder(order);
 
         return Response.ok(createdOrder).build();
@@ -41,7 +43,11 @@ public class OrdersResource {
 
     @GET
     @Path("{id}")
-    public Response getOrder(@PathParam("id") String orderId) {
+    public Response getOrder(
+            @PathParam("id")
+            @Pattern(regexp = "^[a-zA-Z]{3}[0-9]{5}$", message = "Invalid order id format. Expected format is 'ABC12345'")
+                    String orderId) {
+
         OrderDto order = orderService.getOrder(orderId);
 
         return Response.ok(order).build();
@@ -58,7 +64,11 @@ public class OrdersResource {
 
     @DELETE
     @Path("{id}")
-    public Response deleteOrder(@PathParam("id") String orderId) {
+    public Response deleteOrder(
+            @PathParam("id")
+            @Pattern(regexp = "^[a-zA-Z]{3}[0-9]{5}$", message = "Invalid order id format. Expected format is 'ABC12345'")
+                    String orderId) {
+
         orderService.deleteOrder(orderId);
 
         return Response.ok().build();
@@ -66,7 +76,13 @@ public class OrdersResource {
 
     @PUT
     @Path("{id}")
-    public Response updateOrder(@PathParam("id") String orderId, OrderDto order) {
+    public Response updateOrder(
+            @PathParam("id")
+            @Pattern(regexp = "^[a-zA-Z]{3}[0-9]{5}$", message = "Invalid order id format. Expected format is 'ABC12345'")
+                    String orderId,
+            @Valid
+                    OrderDto order) {
+
         OrderDto updatedOrder = orderService.updateOrder(orderId, order);
 
         return Response.ok(updatedOrder).build();

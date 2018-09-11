@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 public class OrderServiceImplTest {
 
     @Mock private OrderDao dao;
-    @InjectMocks private OrderService serv = new OrderServiceImpl();
+    @InjectMocks private OrderServiceImpl serv;
 
     private OrderDto order1 = new OrderDto("1144", "twenty one", "none", "3129", "firstuser@gmail.com");
     private OrderDto order2 = new OrderDto("3257", "twenty two", "none", "4024", "seconduser@gmail.com");
