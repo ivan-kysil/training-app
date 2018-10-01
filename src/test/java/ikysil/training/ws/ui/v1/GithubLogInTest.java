@@ -3,6 +3,9 @@ package ikysil.training.ws.ui.v1;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import ikysil.training.ws.ui.v1.pages.GithubHomePage;
+import ikysil.training.ws.ui.v1.pages.GithubLogInPage;
+import ikysil.training.ws.ui.v1.pages.GithubWelcomePage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +34,8 @@ public class GithubLogInTest {
 
     private final String GITHUB_URL = "https://github.com/login";
 
+    private GithubLogInPage logInPage = new GithubLogInPage(cdriver);
+
     @Before
     public void setUp(){
         cdriver.get(GITHUB_URL);
@@ -40,11 +45,9 @@ public class GithubLogInTest {
     public void shortPasswordTest(){
         test = extent.startTest("Attempting to enter short password");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(USERNAME_VALID);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD_SHORT);
-        cdriver.findElement(By.name("commit")).click();
+        logInPage.loginAs(USERNAME_VALID, PASSWORD_SHORT);
         test.log(LogStatus.INFO, "LogIn button is clicked");
-        assertThat(cdriver.findElement(By.id("js-flash-container")).getText())
+        assertThat(logInPage.getErrorText())
                 .isEqualTo("Incorrect username or password.");
         test.log(LogStatus.PASS, "LogIn disapproved successfully");
     }
@@ -53,11 +56,9 @@ public class GithubLogInTest {
     public void incorrectUsernameTest(){
         test = extent.startTest("Attempting to enter ivalid username");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(USERNAME_INVALID);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD);
-        cdriver.findElement(By.name("commit")).click();
+        logInPage.loginAs(USERNAME_INVALID, PASSWORD);
         test.log(LogStatus.INFO, "LogIn button is clicked");
-        assertThat(cdriver.findElement(By.id("js-flash-container")).getText())
+        assertThat(logInPage.getErrorText())
                 .isEqualTo("Incorrect username or password.");
         test.log(LogStatus.PASS, "LogIn disapproved successfully");
     }
@@ -66,11 +67,9 @@ public class GithubLogInTest {
     public void emptyUsernameAndPasswordTest(){
         test = extent.startTest("Attempting to enter empty password and username");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(USERNAME_EMPTY);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD_EMPTY);
-        cdriver.findElement(By.name("commit")).click();
+        logInPage.loginAs(USERNAME_EMPTY, PASSWORD_EMPTY);
         test.log(LogStatus.INFO, "LogIn button is clicked");
-        assertThat(cdriver.findElement(By.id("js-flash-container")).getText())
+        assertThat(logInPage.getErrorText())
                 .isEqualTo("Incorrect username or password.");
         test.log(LogStatus.PASS, "LogIn disapproved successfully");
     }
@@ -79,11 +78,9 @@ public class GithubLogInTest {
     public void passwordWithoutNumberTest(){
         test = extent.startTest("Attempting to enter password without number");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(USERNAME_EMPTY);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD_WITHOUT_NUMBERS);
-        cdriver.findElement(By.name("commit")).click();
+        logInPage.loginAs(USERNAME_VALID, PASSWORD_WITHOUT_NUMBERS);
         test.log(LogStatus.INFO, "LogIn button is clicked");
-        assertThat(cdriver.findElement(By.id("js-flash-container")).getText())
+        assertThat(logInPage.getErrorText())
                 .isEqualTo("Incorrect username or password.");
         test.log(LogStatus.PASS, "LogIn disapproved successfully");
     }
@@ -92,12 +89,10 @@ public class GithubLogInTest {
     public void usernameLogInOKTest(){
         test = extent.startTest("LogIn with username");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(USERNAME_VALID);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD);
-        cdriver.findElement(By.name("commit")).click();
+        GithubHomePage homePage = logInPage.loginAs(USERNAME_VALID, PASSWORD);
         test.log(LogStatus.INFO, "LogIn button is clicked");
-        cdriver.findElement(By.xpath("//*[@id=\"user-links\"]/li[3]")).click();
-        assertThat(cdriver.findElement(By.className("header-nav-current-user")).getText())
+        homePage.dropDownProfile();
+        assertThat(homePage.getUsernameText())
                 .isEqualTo("Signed in as " + USERNAME_VALID);
         test.log(LogStatus.PASS, "LogIn successful");
     }
@@ -106,12 +101,10 @@ public class GithubLogInTest {
     public void emailLogInOKTest(){
         test = extent.startTest("LogIn with email");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(EMAIL);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD);
-        cdriver.findElement(By.name("commit")).click();
+        GithubHomePage homePage = logInPage.loginAs(EMAIL, PASSWORD);
         test.log(LogStatus.INFO, "LogIn button is clicked");
-        cdriver.findElement(By.xpath("//*[@id=\"user-links\"]/li[3]")).click();
-        assertThat(cdriver.findElement(By.className("header-nav-current-user")).getText())
+        homePage.dropDownProfile();
+        assertThat(homePage.getUsernameText())
                 .isEqualTo("Signed in as " + USERNAME_VALID);
         test.log(LogStatus.PASS, "LogIn successful");
     }
@@ -120,14 +113,11 @@ public class GithubLogInTest {
     public void signOutOKTest(){
         test = extent.startTest("Verifying user sign out");
         test.log(LogStatus.INFO, "Test is initiated");
-        cdriver.findElement(By.id("login_field")).sendKeys(USERNAME_VALID);
-        cdriver.findElement(By.id("password")).sendKeys(PASSWORD);
-        cdriver.findElement(By.name("commit")).click();
+        GithubHomePage homePage = logInPage.loginAs(EMAIL, PASSWORD);
         test.log(LogStatus.PASS, "LogIn successful");
-        cdriver.findElement(By.xpath("//*[@id=\"user-links\"]/li[3]")).click();
-        cdriver.findElement(By.className("dropdown-signout")).click();
+        GithubWelcomePage welcomePage = homePage.signOut();
         test.log(LogStatus.INFO, "Sign out button is clicked");
-        assertThat(cdriver.findElement(By.cssSelector("div.HeaderNavlink.px-0.py-2.m-0")).getText())
+        assertThat(welcomePage.getNoUserText())
                 .isEqualTo("Sign in or Sign up");
         test.log(LogStatus.PASS, "Sign out successful");
     }
