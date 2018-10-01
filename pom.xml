@@ -154,6 +154,29 @@
             <artifactId>vavr</artifactId>
         </dependency>
 
+        <!-- Gatling dependency-->
+        <dependency>
+            <groupId>io.gatling.highcharts</groupId>
+            <artifactId>gatling-charts-highcharts</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Selenium dependency -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.42.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Extend report jar -->
+        <dependency>
+            <groupId>com.relevantcodes</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>2.40.2</version>
+        </dependency>
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -170,6 +193,12 @@
     <!-- TODO add findbug/checkstyle support -->
     <build>
         <plugins>
+            <!-- Gatling plugin -->
+            <plugin>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>2.2.4</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
