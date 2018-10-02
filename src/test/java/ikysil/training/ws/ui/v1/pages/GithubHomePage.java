@@ -5,9 +5,9 @@ import org.openqa.selenium.WebDriver;
 
 public class GithubHomePage {
 
-    private By userDropdownLocator = By.xpath("//*[@id=\"user-links\"]/li[3]");
-    private By dropdownSignoutLocator = By.className("dropdown-signout");
-    private By usernameLocator = By.className("header-nav-current-user");
+    private By userDropdownLocator = By.cssSelector("#user-links > li:nth-child(3)");
+    private By dropdownSignoutLocator = By.cssSelector("button.dropdown-item.dropdown-signout");
+    private By usernameLocator = By.cssSelector("li.header-nav-current-user.css-truncate");
 
     private final WebDriver driver;
 

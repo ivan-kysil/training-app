@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class GithubWelcomePage{
 
-    By noRegisterUserLocator = By.cssSelector("div.HeaderNavlink.px-0.py-2.m-0");
+    private By noRegisterUserLocator = By.cssSelector("div.HeaderNavlink.px-0.py-2.m-0");
 
     private final WebDriver driver;
 
