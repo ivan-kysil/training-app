@@ -5,10 +5,10 @@ import org.openqa.selenium.WebDriver;
 
 public class GithubLogInPage {
 
-    By usernameLocator = By.id("login_field");
-    By passwordLocator = By.id("password");
-    By signInBtnLocator = By.name("commit");
-    By errrorLocator = By.id("js-flash-container");
+    private By usernameLocator = By.cssSelector("#login_field");
+    private By passwordLocator = By.cssSelector("#password");
+    private By signInBtnLocator = By.cssSelector("input[name=commit]");
+    private By errrorLocator = By.cssSelector("#js-flash-container");
 
     private final WebDriver driver;
 
