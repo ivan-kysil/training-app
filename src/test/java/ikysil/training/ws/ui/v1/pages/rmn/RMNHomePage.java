@@ -1,6 +1,8 @@
-package ikysil.training.ws.ui.v1.pages.RMN;
+package ikysil.training.ws.ui.v1.pages.rmn;
 
-import ikysil.training.ws.ui.v1.pages.Girhub.GithubWelcomePage;
+import ikysil.training.ws.ui.v1.pages.rmn.impl.RMNAboutPage;
+import ikysil.training.ws.ui.v1.pages.rmn.impl.RMNBlogPage;
+import ikysil.training.ws.ui.v1.pages.rmn.impl.RMNPrivatePolicyPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
