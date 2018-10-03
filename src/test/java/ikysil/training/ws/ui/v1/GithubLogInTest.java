@@ -3,13 +3,12 @@ package ikysil.training.ws.ui.v1;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import ikysil.training.ws.ui.v1.pages.GithubHomePage;
-import ikysil.training.ws.ui.v1.pages.GithubLogInPage;
-import ikysil.training.ws.ui.v1.pages.GithubWelcomePage;
+import ikysil.training.ws.ui.v1.pages.Girhub.GithubHomePage;
+import ikysil.training.ws.ui.v1.pages.Girhub.GithubLogInPage;
+import ikysil.training.ws.ui.v1.pages.Girhub.GithubWelcomePage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
