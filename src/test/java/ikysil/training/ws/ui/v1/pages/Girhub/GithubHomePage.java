@@ -1,4 +1,4 @@
-package ikysil.training.ws.ui.v1.pages;
+package ikysil.training.ws.ui.v1.pages.Girhub;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
