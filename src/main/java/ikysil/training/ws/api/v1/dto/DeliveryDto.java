@@ -9,4 +9,19 @@ public class DeliveryDto {
 
     private AddressDto shippingAddress;
     private String deliveryEmail;
+
+    public DeliveryDto(){
+    }
+
+    public DeliveryDto(String deliveryEmail){
+//        this.shippingAddress = shippingAddress;
+        this.deliveryEmail = deliveryEmail;
+    }
+
+    @Override
+    public String toString() {
+        return '{' +
+                "deliveryEmail=" + deliveryEmail +
+                '}';
+    }
 }

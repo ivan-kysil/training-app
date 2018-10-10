@@ -2,7 +2,9 @@ package ikysil.training.ws.api.v1;
 
 import ikysil.training.config.IntegrationTestConfig;
 import ikysil.training.dao.OrderDao;
+import ikysil.training.ws.api.v1.dto.DeliveryDto;
 import ikysil.training.ws.api.v1.dto.OrderDto;
+import ikysil.training.ws.api.v1.dto.OrderStatus;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
@@ -14,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.replaceFiltersWith;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.assertj.core.api.Assertions.*;
@@ -43,6 +47,10 @@ public class OrdersResourceTest {
 
     @Before
     public void setUp() {
+        ReflectionTestUtils.setField(order1, "deliveryInfo",new DeliveryDto("delivery1@ukr.net"));
+        ReflectionTestUtils.setField(order2, "deliveryInfo",new DeliveryDto("delivery2@ukr.net"));
+        ReflectionTestUtils.setField(order1, "orderStatus", OrderStatus.OPEN);
+        ReflectionTestUtils.setField(order2, "orderStatus", OrderStatus.CANCELLED);
         RestAssured.basePath = BASE_URL;
         RestAssured.port = port;
         dao.saveOrder(order1);
@@ -84,14 +92,14 @@ public class OrdersResourceTest {
                 .get(order2.getId())
                 .then()
                 .body("userId", equalTo(order2.getUserId()))
-                .body("deliveryInfo", equalTo(order2.getDeliveryInfo()))
+                .body("orderStatus", equalTo("CANCELLED"))
                 .statusCode(200);
         given().contentType(ContentType.JSON)
                 .when()
                 .get(order1.getId())
                 .then()
                 .body("userId", equalTo(order1.getUserId()))
-                .body("deliveryInfo", equalTo(order1.getDeliveryInfo()))
+                .body("orderStatus", equalTo("OPEN"))
                 .statusCode(200);
     }
 
