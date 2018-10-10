@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class InMemoryOrderDao implements OrderDao {
 
     private Map<String, OrderDto> storage = new HashMap<>();

@@ -1,5 +1,6 @@
 package ikysil.training.ws.api.v1.dto;
 
+import ikysil.training.model.Order;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Email;
@@ -38,5 +39,10 @@ public class OrderDto {
         this.sourceSystem = sourceSystem;
         this.userId = userId;
         this.userEmail = userEmail;
+    }
+
+    public Order toModel() {
+        // TODO fill model from dto
+        return new Order();
     }
 }

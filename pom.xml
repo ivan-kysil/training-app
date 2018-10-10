@@ -24,13 +24,14 @@
         <moneta.version>1.1</moneta.version>
         <logback.version>1.1.2</logback.version>
         <org.modelmapper.version>2.1.0</org.modelmapper.version>
-        <postgresql.version>42.2.2</postgresql.version>
 
         <json-patch.version>1.9</json-patch.version>
         <jackson.version>2.9.5</jackson.version>
         <lombok.version>1.18.0</lombok.version>
         <lombok-maven.version>1.18.0.0</lombok-maven.version>
         <liquibase-slf4j.version>2.0.0</liquibase-slf4j.version>
+        <postgresql.version>9.4-1201-jdbc4</postgresql.version>
+        <liquibase.version>3.3.0</liquibase.version>
 
         <!-- Test Dependencies -->
         <powermock.version>1.7.4</powermock.version>
@@ -68,6 +69,17 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${validation-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
             </dependency>
 
             <dependency>
@@ -129,11 +141,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
         <!-- Other  Dependencies -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -263,6 +283,33 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <changeLogFile>src/main/resources/db/changelog.xml</changeLogFile>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <username>postgres</username>
+                    <password>password</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
 

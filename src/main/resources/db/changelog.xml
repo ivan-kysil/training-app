@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+        logicalFilePath="changelog.xml">
+
+    <changeSet author="ikysil" id="1">
+        <createTable tableName="orders">
+            <column name="id" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderNumber" type="VARCHAR"/>
+            <column name="sourceSystem" type="VARCHAR"/>
+            <column name="userId" type="VARCHAR"/>
+            <column name="userEmail" type="VARCHAR"/>
+            <column name="orderStatus" type="VARCHAR"/>
+            <column name="createdOn" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="updatedOn" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="completedOn" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+
+            <!-- Delivery, Address -->
+            <column name="deliveryEmail" type="VARCHAR"/>
+            <column name="firstName" type="VARCHAR"/>
+            <column name="lastName" type="VARCHAR"/>
+            <column name="companyName" type="VARCHAR"/>
+            <column name="address1" type="VARCHAR"/>
+            <column name="address2" type="VARCHAR"/>
+            <column name="city" type="VARCHAR"/>
+            <column name="country" type="VARCHAR"/>
+            <column name="countryCode" type="VARCHAR"/>
+            <column name="state" type="VARCHAR"/>
+            <column name="postalCode" type="VARCHAR"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
