@@ -7,6 +7,7 @@ import ikysil.training.dao.OrderDao;
 import ikysil.training.dao.impl.DbOrderDao;
 import ikysil.training.dao.impl.InMemoryOrderDao;
 import ikysil.training.dao.repo.OrderRepo;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -14,7 +15,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import javax.sql.DataSource;
 
@@ -51,13 +51,19 @@ public class MainConfiguration {
             @Value("${db.name}") String dbName,
             @Value("${db.user}") String dbUser,
             @Value("${db.password}")  String dbPassword) {
-        SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
+        BasicDataSource dataSource = new BasicDataSource();
 
         dataSource.setDriverClassName(org.postgresql.Driver.class.getName());
         dataSource.setUrl("jdbc:postgresql://" + dbHost + ":" + dbPort + '/' + dbName);
         dataSource.setUsername(dbUser);
         dataSource.setPassword(dbPassword);
-
+        dataSource.setInitialSize(1);
+        dataSource.setMinIdle(0);
+        dataSource.setMaxIdle(100);
+        dataSource.setMaxTotal(5);
+        dataSource.setMaxWaitMillis(-1);
+        dataSource.setTestWhileIdle(true);
+        dataSource.setValidationQuery("select 1");
         return dataSource;
     }
 }
